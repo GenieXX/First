@@ -1,0 +1,81 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+	<head>
+		<title>Login.html</title>
+
+		<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+		<meta http-equiv="description" content="this is my page">
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+
+		<!--<link rel="stylesheet" type="text/css" href="./styles.css">-->
+		<script type="text/javascript">
+			function checkuser() {
+				var uname = document.getElementById("uname").value;
+				var pwd = document.getElementById("pwd").value;
+				if(uname == "student" && pwd == "123456") {
+					alert("请开始你的表演！");
+					window.location.href = "Bunny Vocabulary-Home.html";
+				} else {
+					alert("用户名或密码错误！");
+					return false;
+				}
+			}
+
+			//  	<p class="a">A tool to help you memorize words better</p>
+		</script>
+
+		<style>
+			body {
+				background: #242223 url("HBackGr.jpg") no-repeat 50% 80%
+			}
+			
+			h1 {
+				color: #FFFFFF;
+				text-shadow: 1px 2px 2px #ff0000;
+				text-align: center;
+				font-family: "bodoni mt";
+				font-size: 80px;
+				margin: 200px ;
+			}
+			
+			div {
+				color: #9f9f9f;
+				text-align: center;
+				font-family: "微软雅黑";
+			}
+			
+			p.a {
+				font-size: 20px;
+			}
+			
+			p.b {
+				font-size: 3px;
+				font-style: italic;
+				margin-top: 10%;
+			}
+			
+			input {
+				background: none;
+				height: 25px;
+				border-style: hidden;
+				border-bottom: dotted #9F9F9F 1px;
+				color: #FFFFFF;
+				font-size: 20px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<h1><b>Bunny Vocabulary</b></h1>
+		<div id="form1" name="form1" style="text-align:center" method="post" action="">
+			<p class="a">用户名:<input type="text" id="uname" /><br></p> 
+			<p class="a">密码:<input type="password" id="pwd" /><br></p>
+			<input type="button" value="login" onclick="return checkuser()" />
+		</div>
+		<div>
+			<p class="b">Original：Cao Mengfei Development.：Shu Xinzhe Xu Jianing</p>
+		</div>
+	</body>
+
+</html>

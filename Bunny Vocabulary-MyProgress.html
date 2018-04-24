@@ -1,0 +1,185 @@
+﻿<!DOCTYPE html>
+<html>
+
+	<head>
+		<title>Bunny Vocabulary</title>
+		<script>
+			function loadXMLDoc(xmlFile) {
+				var xmlDoc;
+				try {
+					//Internet Explorer 可以使用其原生方法加载 XML
+					xmlDoc = new ActiveXObject("Microsoft.XMLDOM");
+				} catch(e) {
+					try {
+						//Firefox 也有标准方法,但可能造成其他浏览器报错,故省略
+						//使用 XMLHttpRequest 替代,适用于大部分浏览器
+						var xmlHttp = new XMLHttpRequest();
+						xmlHttp.open("GET", xmlFile, false);
+						xmlHttp.send(null);
+						return xmlHttp.responseXML;
+					} catch(e) {
+						return null;
+					}
+				}
+				xmlDoc.async = false;
+				xmlDoc.load(xmlFile);
+				return xmlDoc;
+			}
+
+			function GetRandomNum(Min, Max) {
+				var Range = Max - Min;
+				var Rand = Math.random();
+				return(Min + Math.round(Rand * Range));
+			}
+
+			var xml = loadXMLDoc("单词.xml");
+			var domElemsVo = xml.getElementsByTagName("单词");
+			var domElemsPr = xml.getElementsByTagName("音标");
+			var domElemsEx = xml.getElementsByTagName("解释");
+			var i=1;
+
+			function Change() {
+				i = GetRandomNum(0, 1999);
+				document.getElementById("explain").innerHTML = null;
+				document.getElementById("spell").innerHTML = null;
+				document.getElementById("flag").innerHTML = null;
+				document.getElementById("ca").innerHTML = null;
+			}
+
+			function Explain() {
+				document.getElementById("explain").innerHTML = domElemsEx[i].childNodes[0].data;
+			}
+
+			function Voice() {
+				var audio = document.createElement("audio");
+				var filename = domElemsVo[i].childNodes[0].data + '.mp3';
+				audio.src = './music/' + filename;
+				audio.play();
+			}
+
+			function Check() {
+				var x = document.getElementById("spell").value;
+				if(x == domElemsVo[i].childNodes[0].data)
+					document.getElementById("flag").innerHTML = "正确";
+				else
+					document.getElementById("flag").innerHTML = "错误";
+			}
+			
+			function Correct(){
+				document.getElementById('ca').innerHTML=domElemsVo[i].childNodes[0].data;
+			}
+			
+//回车键判断
+//			$('#spell').bind('onkeydown', function(event) {
+//				if(event.keyCode == '13')
+//					Check();
+//			});
+
+		</script>
+		<style>
+			header {
+				background-color: #242223/*Aquamarine*/;
+				color: white;
+				text-align: center;
+				font-family: "微软雅黑";
+				padding: 10px;
+			}
+			
+			nav {
+				line-height: 40px;
+				background: none;
+				font-family: arial;
+				height: 500px;
+				width: 120px;
+				float: left;
+				padding: 10px;
+				text-shadow: 0 1px rgba(255,255,255,0.2), 1px 0 rgba(255,255,255,0.2), -1px 0  rgba(255,255,255,0.2), 0 -1px rgba(255,255,255,0.2);
+			}
+			
+			section {
+				height: 500px;
+				float: center;
+				padding: 150px;
+				text-align: center;
+				background: url("./p/bg (4).jpg") no-repeat ;
+				background-size: cover;
+			}
+			
+			h2 {
+				color: #FFFFFF;
+				text-align: center;
+				font-family: "微软雅黑";
+				text-shadow: 0 0 7px #000000;
+				font-size: 30px;
+			}
+			
+			p {
+				color: #FFFFFF;
+				text-align: center;
+				font-family: "微软雅黑";
+				text-shadow: 0 0 5px #000000;
+				font-size: 15px;
+			}
+			input.a {
+				background: none;
+				border-style: hidden;
+				color: #FFFFFF;
+				margin: 100px;
+				font: 20px "微软雅黑" ;
+			}
+			
+			input.b {
+				background: #242223;
+				border-style: hidden;
+				color: #FFFFFF;
+				font: 20px "微软雅黑" ;
+			}
+			
+			
+			footer {
+				background-color: #242223/*Aquamarine*/;
+				color: white;
+				clear: both;
+				text-align: center;
+				padding: 10px;
+			}
+		</style>
+	</head>
+
+	<body>
+
+		<header>
+			<h1>Bunny Vocabulary</h1>
+		</header>
+
+		<nav>
+			<a href="Bunny Vocabulary-Home.html" style="text-decoration:none;color:black;">Home</a><br />
+
+			<a href="Bunny Vocabulary-StartLearning.html" style="text-decoration:none;color:black;">Start Learning</a><br /> My Progress<br />
+		</nav>
+
+		<section>
+			<br />
+			<br />
+			<h2 >Believe in yourself !</h2>
+			<br>
+			<input class="b" type="button" onclick="Voice()" value="拼写"></input>
+			<input class="b" type="button" onclick="Explain()" value="解释"></button>
+			<p id="explain"></p>
+			<br>
+			<input type="text" id="spell"><p id="flag"></p>
+			<br>
+			<input class="b" type="button" onclick="Check()" value="校验"></input>
+			<input class="b" type="button" onclick="Correct()" value="Correct answer"></input>
+			<p id="ca"> </p>
+			<br>
+			<input class="a" type="button" onclick="Change()" value="下一个" ></input>
+		</section>
+
+		<footer>
+			Believe in yourself !
+		</footer>
+
+	</body>
+
+</html>

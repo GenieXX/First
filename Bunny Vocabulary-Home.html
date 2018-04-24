@@ -1,0 +1,144 @@
+﻿<!DOCTYPE html>
+<html>
+
+	<head>
+		<title>Bunny Vocabulary</title>
+		<script type="text/javascript">
+			//---- 加载 XML 文档的函数 ----
+			function loadXMLDoc(xmlFile) {
+				var xmlDoc;
+				try {
+					//Internet Explorer 可以使用其原生方法加载 XML
+					xmlDoc = new ActiveXObject("Microsoft.XMLDOM");
+				} catch(e) {
+					try {
+						//Firefox 也有标准方法,但可能造成其他浏览器报错,故省略
+						//使用 XMLHttpRequest 替代,适用于大部分浏览器
+						var xmlHttp = new XMLHttpRequest();
+						xmlHttp.open("GET", xmlFile, false);
+						xmlHttp.send(null);
+						return xmlHttp.responseXML;
+					} catch(e) {
+						return null;
+					}
+				}
+				xmlDoc.async = false;
+				xmlDoc.load(xmlFile);
+				return xmlDoc;
+			}
+
+			function GetRandomNum(Min, Max) {
+				var Range = Max - Min;
+				var Rand = Math.random();
+				return(Min + Math.round(Rand * Range));
+			}
+			var xml = loadXMLDoc("名言.xml");
+			var domElemsVo = xml.getElementsByTagName("句子");
+			var domElemsPr = xml.getElementsByTagName("解释");
+			var xml2 = loadXMLDoc("背景.xml");
+			var domElemsBg = xml2.getElementsByTagName("名称");
+			//var bgname=domElemsBg[i].childNodes[0].data;
+			//var bg=document.getElementById("demoA"); 
+			function SeChange() {
+				var i = GetRandomNum(0, 19);
+				document.getElementById("demo1").innerHTML = domElemsVo[i].childNodes[0].data;
+				document.getElementById("demo2").innerHTML = domElemsPr[i].childNodes[0].data;
+			}
+
+			function BgChange() {
+				var i = GetRandomNum(1, 11);
+				var bg = document.getElementById("demoA");
+				var picture="./p/bg ("+i+").jpg";
+				bg.style.backgroundImage = "url('" + picture + "')";
+			}
+		</Script>
+		<style>
+			header {
+				background-color: #242223/*Aquamarine*/;
+				color: white;
+				text-align: center;
+				font-family: "微软雅黑";
+				padding: 10px;
+			}
+			
+			nav {
+				line-height: 40px;
+				background: none;
+				font-family: arial;
+				height: 500px;
+				width: 120px;
+				float: left;
+				padding: 10px;
+				text-shadow: 0 1px rgba(255,255,255,0.2), 1px 0 rgba(255,255,255,0.2), -1px 0  rgba(255,255,255,0.2), 0 -1px rgba(255,255,255,0.2);
+			}
+			
+			section {
+				height: 400px;
+				float: center;
+				padding: 200px;
+				text-align: center;
+				background: url("./p/bg (5).jpg") no-repeat ;
+				background-size: cover;
+			}
+			
+			input {
+				background: none;
+				border-style: hidden;
+				color: #FFFFFF;
+				margin: 100px;
+				font: 20px "微软雅黑" ;
+			}
+			div {
+				color: #FFFFFF;
+				text-align: center;
+				font-family: "微软雅黑";
+				text-shadow: 0 0 7px #000000;
+			}
+			
+			p.a {
+				font-size: 30px;
+			}
+			
+			p.b {
+				font-size: 40px;
+			}
+			
+			footer {
+				background-color: #242223/*Aquamarine*/;
+				color: white;
+				clear: both;
+				text-align: center;
+				padding: 10px;
+			}
+		</style>
+	</head>
+
+	<body style="background-color:AliceBlue">
+
+		<header>
+			<h1>Bunny Vocabulary</h1>
+		</header>
+
+		<nav>
+			Home<br />
+
+			<a href="Bunny vocabulary-StartLearning.html" style="text-decoration:none;color:black;">Start Learning</a><br />
+
+			<a href="Bunny vocabulary-MyProgress.html" style="text-decoration:none;color:black;">My Progress</a><br />
+		</nav>
+		<section id="demoA">
+			<div>
+			<p class="a">Famous Remarks</p>
+			<p id="demo1" class="b">quitters never win and winners never quit.</p>
+			<p id="demo2" class="b">退缩者永无胜利，胜利者永不退缩。</p>
+			</div>
+			<input type="button" onclick="SeChange();BgChange()" value="下一个" ></input>
+		</section>
+
+		<footer>
+			Believe in yourself !
+		</footer>
+
+	</body>
+
+</html>
